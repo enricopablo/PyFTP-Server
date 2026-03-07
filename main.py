@@ -49,13 +49,37 @@ Path(PATH_FTP_DATA).mkdir(parents=True, exist_ok=True)
 # --- Handler com Monitor de Eventos ---
 class MonitorFTPHandler(FTPHandler):
     def on_file_received(self, file):
+        """Gatilho para Upload concluído (Mac -> Windows)"""
         console.print(
-            f" [bold green]✔ Upload concluído:[/] [white]{os.path.basename(file)}[/]"
+            f" [bold green]✔ Upload Concluído:[/] [white]{os.path.basename(file)}[/]"
         )
 
     def on_file_sent(self, file):
+        """Gatilho para Download concluído (Windows -> Mac)"""
         console.print(
-            f" [bold blue]✔ Download concluído:[/] [white]{os.path.basename(file)}[/]"
+            f" [bold blue]✔ Download Concluído:[/] [white]{os.path.basename(file)}[/]"
+        )
+
+    def on_incomplete_file_received(self, file):
+        """Gatilho para quando o Upload é cancelado ou cai no meio"""
+        nome_arquivo = os.path.basename(file)
+        if os.path.exists(file):
+            try:
+                os.remove(
+                    file
+                )  # Remove o arquivo parcial para não ocupar espaço/corromper
+                status_limpeza = "e o arquivo parcial foi removido"
+            except Exception:
+                status_limpeza = "mas houve erro ao remover o arquivo parcial"
+
+        console.print(
+            f" [bold red]✘ Upload Cancelado:[/] [white]{nome_arquivo}[/] [dim]({status_limpeza})[/]"
+        )
+
+    def on_incomplete_file_sent(self, file):
+        """Gatilho para quando o cliente (Mac) desconecta antes de terminar de baixar"""
+        console.print(
+            f" [bold yellow]⚠ Download Interrompido pelo Cliente:[/] [white]{os.path.basename(file)}[/]"
         )
 
 
@@ -118,7 +142,7 @@ def start_ftp_server():
             loop.poll(timeout=0.5)
 
     except (KeyboardInterrupt, SystemExit):
-        console.print("\n[bold yellow]👋 Encerrando servidor com segurança...[/]")
+        console.print("\n[bold yellow]👋 Encerrando o servidor com segurança...[/]")
     except Exception as e:
         console.print(f"\n[bold red]❌ Erro crítico: {e}[/]")
     finally:
