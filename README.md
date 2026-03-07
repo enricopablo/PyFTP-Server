@@ -6,7 +6,7 @@ Um servidor FTP leve, seguro e extremamente fácil de rodar em qualquer sistema 
 ![UV](https://img.shields.io/badge/Managed%20by-UV-purple?logo=python)
 ![Protocol](https://img.shields.io/badge/Protocol-FTP-orange)
 
-<img width="970" height="504" alt="PyFTP-Server" src="https://github.com/user-attachments/assets/b95afad5-7316-4904-aad3-61310d50d652" />
+<img width="1143" height="665" alt="PyFTP-Server-Print" src="https://github.com/user-attachments/assets/0e5a7b08-975c-4a7b-99d3-0140dba48802" />
 
 ## ✨ Funcionalidades
 
