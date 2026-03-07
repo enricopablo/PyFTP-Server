@@ -72,7 +72,8 @@ def start_ftp_server():
     info_table.add_row(
         "📂 [bold cyan]Diretório de Dados:[/]", f"[white]{PATH_FTP_DATA}[/]"
     )
-    info_table.add_row("👤 [bold cyan]Usuário Ativo:[/]", f"[green]{FTP_USER}[/]")
+    info_table.add_row("👤 [bold cyan]Usuário (Default):[/]", f"[green]{FTP_USER}[/]")
+    info_table.add_row("👤 [bold cyan]Senha (Default):[/]", f"[green]{FTP_PASS}[/]")
     info_table.add_row("🌐 [bold cyan]Escuta:[/]", "[bold yellow]0.0.0.0:2121[/]")
     info_table.add_row("📝 [bold cyan]Arquivo de Log:[/]", f"[dim]{PATH_FTP_LOG}[/]")
 
