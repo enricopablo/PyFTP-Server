@@ -11,6 +11,7 @@
 
 import logging
 import os
+import signal  # <--- Importante para o Ctrl+C no Windows
 import sys
 from pathlib import Path
 
@@ -34,8 +35,6 @@ load_dotenv(BASE_DIR / ".env")
 
 FTP_USER = os.getenv("FTP_USER")
 FTP_PASS = os.getenv("FTP_PASS")
-
-# Resolução de caminhos
 raw_path_data = os.getenv("PATH_FTP_DATA", "ftp_data")
 PATH_FTP_DATA = (
     str(Path(raw_path_data).expanduser().resolve())
@@ -50,13 +49,11 @@ Path(PATH_FTP_DATA).mkdir(parents=True, exist_ok=True)
 # --- Handler com Monitor de Arquivos ---
 class MonitorFTPHandler(FTPHandler):
     def on_file_received(self, file):
-        """Log visual para Upload (Mac -> Windows)"""
         console.print(
             f" [bold green]✔ Upload concluído:[/] [white]{os.path.basename(file)}[/]"
         )
 
     def on_file_sent(self, file):
-        """Log visual para Download (Windows -> Mac)"""
         console.print(
             f" [bold blue]✔ Download concluído:[/] [white]{os.path.basename(file)}[/]"
         )
@@ -69,18 +66,25 @@ class MonitorFTPHandler(FTPHandler):
         )
 
 
+# --- Função para encerrar o programa (Windows Friendly) ---
+def signal_handler(sig, frame):
+    console.print("\n[bold yellow]👋 Encerrando servidor com segurança...[/]")
+    sys.exit(0)
+
+
+# Registra o handler para o Ctrl+C
+signal.signal(signal.SIGINT, signal_handler)
+
+
 # ----------------------------------------------------------------------
 # Inicialização do Servidor
 # ----------------------------------------------------------------------
 def start_ftp_server():
-    # Limpa a tela para o início limpo
     os.system("cls" if os.name == "nt" else "clear")
 
-    # 1. Banner
     banner_raw = pyfiglet.figlet_format("PyFTP - Server", font="slant")
     console.print(f"[bold grey37]{banner_raw}[/]")
 
-    # 2. Tabela de Configurações (IP fixo em 0.0.0.0)
     info_table = Table(show_header=False, box=None, padding=(0, 2))
     info_table.add_row(
         "📂 [bold cyan]Diretório de Dados:[/]", f"[white]{PATH_FTP_DATA}[/]"
@@ -93,7 +97,6 @@ def start_ftp_server():
     )
     info_table.add_row("📝 [bold cyan]Arquivo de Log:[/]", f"[dim]{PATH_FTP_LOG}[/]")
 
-    # 3. Exibe Painel de Status
     console.print(
         Panel(
             info_table,
@@ -107,7 +110,6 @@ def start_ftp_server():
         "\n[bold green]🚀 Aguardando conexões...[/] [white on red] CTRL+C para parar [/]\n"
     )
 
-    # Configuração de Log Híbrida (Arquivo + Console)
     logging.basicConfig(
         level=logging.INFO,
         format="[%(asctime)s] [%(levelname)s] %(message)s",
@@ -126,11 +128,8 @@ def start_ftp_server():
     handler.passive_ports = range(60000, 60100)
 
     try:
-        # Binding fixo em 0.0.0.0
         server = FTPServer(("0.0.0.0", 2121), handler)
         server.serve_forever()
-    except KeyboardInterrupt:
-        console.print("\n[bold yellow]👋 Encerrando servidor...[/]")
     except Exception as e:
         console.print(f"\n[bold red]❌ Erro crítico: {e}[/]")
 
