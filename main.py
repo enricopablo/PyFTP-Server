@@ -124,7 +124,7 @@ def start_ftp_server():
     handler.banner = "PyFTP-Server Ready."
 
     try:
-        server = FTPServer(("::", 2121), handler)
+        server = FTPServer(("0.0.0.0", 2121), handler)
         server.serve_forever()
     except KeyboardInterrupt:
         console.print("\n[bold yellow]👋 Encerrando servidor FTP...[/]")
