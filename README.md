@@ -99,3 +99,5 @@ PyFTP-Server/
 
 ## 📝 Licença
 >Desenvolvido para uso pessoal e profissional em fluxos DevOps.
+
+---
