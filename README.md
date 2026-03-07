@@ -11,7 +11,7 @@ Um servidor FTP leve, seguro e extremamente fácil de rodar em qualquer sistema 
 ## ✨ Funcionalidades
 
 * **Portabilidade Total:** Não requer instalação global de bibliotecas. O `uv` resolve tudo.
-* **Dual-Stack:** Suporte nativo a IPv4 e IPv6 (escuta em `::2121`).
+* **Conectividade:** Suporte nativo a IPv4 (escuta na porta `:2121`).
 * **Segurança:** Autenticação via variáveis de ambiente (`.env`).
 * **Logs Automáticos:** Registros salvos em `/logs/ftp_server.log` e exibidos no terminal.
 * **Auto-configuração:** Cria diretórios de logs e dados automaticamente.
