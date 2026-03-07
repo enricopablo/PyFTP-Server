@@ -9,7 +9,7 @@ wheels/
 # Virtual environments
 .venv
 
-# Arquivo .env
+# environments
 .env
 
 # Dir
