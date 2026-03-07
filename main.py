@@ -89,7 +89,7 @@ class MonitorFTPHandler(FTPHandler):
 def start_ftp_server():
     os.system("cls" if os.name == "nt" else "clear")
 
-    banner_raw = pyfiglet.figlet_format("PyFTP - Server", font="slant")
+    banner_raw = pyfiglet.figlet_format("PyFTP-Server", font="slant")
     console.print(f"[bold grey37]{banner_raw}[/]")
 
     info_table = Table(show_header=False, box=None, padding=(0, 2))
