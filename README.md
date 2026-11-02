@@ -24,7 +24,7 @@ Certifique-se de ter o `uv` instalado:
 
 🍎 **macOS /** 🐧 **Linux:**
 ```bash
-curl -LsSf [https://astral.sh/uv/install.sh](https://astral.sh/uv/install.sh) | sh
+curl -LsSf https://astral.sh/uv/install.sh \| sh
 ```
 Ou via `pip`:
 
@@ -35,7 +35,7 @@ pip install uv
 🪟 **Windows (PowerShell):**
 
 ```bash
-powershell -c "iwr [https://astral.sh/uv/install.ps1](https://astral.sh/uv/install.ps1) | iex"
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 \| iex"
 ```
 
 Ou via `pip`:
@@ -101,3 +101,7 @@ PyFTP-Server/
 >Desenvolvido para uso pessoal e profissional em fluxos DevOps.
 
 ---
+
+<p align="center">Obviamente feito com 🤖, engenhosidade humana 🤷🏻‍♂️ e uma quantidade suspeita de tokens 🔥.</p>
+
+<p align="center">Obviously made with 🤖, human ingenuity 🤷🏻‍♂️, and a suspicious amount of tokens 🔥.</p>
